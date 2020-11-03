@@ -2,19 +2,39 @@
 
 와글앱 서버 깃 레포지터리입니다.
 
-## 폴더 구조
 
-src
-|_ app.js
-|_ /api			// controller layer
-|_ /config		// env 변수들
-|_ /services    // service layer
-|_ /models		// data access layer
-|_ /scripts		// 기타 script
-|_ /test		// test code
+## EXPLANATION
 
+### HOW TO RUN APP
+```shell
+> npm run server
+```
 
-## END POINT
+### ARCHITECTURE
+
+src  
+|_ index.js  
+|_ /api			// controller layer  
+|_ /config		// env 변수들  
+|_ /services    // service layer  
+|_ /models		// data access layer  
+|_ /scripts		// 기타 script  
+|_ /test		// test code  
+
+### COMMENT EXPLANATION
+
+- "* SECTION TOPIC"  
+- "(NONE) NORMAL EXPLANATION"
+- "? ISSUE/QUERY"
+- "! FIXME"
+- "TODO TODO"
+
+### ENVIRONMENT SETTINGS
+
+node: v14.15.0
+npm: 6.14.8
+
+### ISSUES
 
 ++ front end에서 아직 덜한 부분들
 * 공유하기(비디오 공유)
@@ -22,7 +42,7 @@ src
 * 담은 메뉴 총합 계산하는 것하기
 
 
-### api/
+## END POINT
 
 ********************************************************
 #### user/register 						POST
