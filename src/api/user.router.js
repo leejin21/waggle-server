@@ -15,7 +15,7 @@ var router = express.Router();
 
 // user/register
 router.post('/register', function(req, res){
-    res.send({token: "token"});
+    res.sendStatus(201);
 })
 
 // user/login
@@ -23,12 +23,17 @@ router.post('/login', function(req, res){
     res.send({token: "token", info: {name: "눈송", phone_num: "010-0000-0000"}});
 })
 
+// user/settings
+router.get('/settings', function(req, res){
+    res.send({name: "아아", phone_num: "010-0000-0000"});
+})
+
 // user/profile
 router.get('/profile', function(req, res){
     res.send({  
         name: "id",
         email: "email",
-        pw: "pw length",
+        password: "pw length",
         phone_num: "phon_num",
         birth: "date",
         sex: "F/M"
@@ -37,7 +42,14 @@ router.get('/profile', function(req, res){
 
 // user/profile
 router.put('/profile', function(req, res){
-    res.send({change: "phone_num/pw/birth/sex"});
+    res.send({  
+        name: "id",
+        email: "email",
+        password: "pw length",
+        phone_num: "phon_num",
+        birth: "date",
+        sex: "F/M"
+    });
 })
 
 

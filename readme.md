@@ -4,6 +4,14 @@
 
 ## EXPLANATION
 
+### GIT BRANCH
+
+우선은 default branch인 develop branch에 업로드하기
+=> 역할 분배 전까지는 이 규칙 고수
+역할 분배 이후: feature/"특성"/"세부 특성" 이렇게 브랜치 이름 명명해서 진행하기
+
+++ 보안 관련해서는 11/20 이후에 고려하기, 앱구현이 우선.
+
 ### HOW TO RUN APP
 ```shell
 > npm run server
@@ -35,19 +43,57 @@ npm: 6.14.8
 
 ### ISSUES
 
+#### server에서 object storage에 추가되는 비디오 어떻게 관리할 지
+
+1. db에 저장
+
+Restaurant table에 data instance insert  
+=> return rest-id 해주기
+
+Menu table에 data instance insert  
+=> return menu-id 해주기
+
+2. 우선 storage에 직접 업로드(비디오, 사진)
+(20일 이후: 자동으로 올리는 로직 구현)
+
+* 썸네일:  
+버켓- waggle-thumbnails
+이름- 무조건 가져 온 rest-id와 동일하게 저장해야 함. 단, 확장자는 아마 jpg. 
+
+* 메뉴 이미지:
+버켓- waggle-menus
+이름- 무조건 가져 온 menu-id와 동일하게 저장해야 함.
+
+* 비디오:  
+버켓- waggle-videos  
+이름- 무조건 가져 온 rest-id와 동일하게 저장해야 함. 단, 확장자는 아마 mp4.  
+
+
+3. 클라이언트에서 본인 파일로 저장
+
+* 썸네일:  
+로그인 시 secure store에 access_key, secret_key 저장해두고 서버 get으로 받았던 rest-name=object_name, bucket_name=waggle-thumbnail 가져와서 assets/thummbnails/에 저장해두기
+(이때 async 사용)
+
+* 비디오:  
+로그인 시 secure store에 access_key, secret_key 저장해두고 서버 get으로 받았던 est-name=object_name, bucket_name=waggle-video으로 가져와서 assets/video/에 저장해두기.. 얼마나 느려질 지는 나도 모르겠음.
+
+
 ++ front end에서 아직 덜한 부분들
 * 공유하기(비디오 공유)
-* 비디오 스크린
+* 비디오 스크린, 타임라인?(eject 이후에 가능한 걸로 사료됨)
 * 담은 메뉴 총합 계산하는 것하기
 
 
 ## END POINT
 
+post할 때 주의사항: 리스트로 묶어서 post 불가.
+
 ********************************************************
 user/register 						POST
 ********************************************************
 header = {}  
-data = {e-mail: “<email>, pw: “<pw>”, phone: “<phone>”, sex: “<sex>”, birth: “<birth>”, ID: ”<ID>”}  
+data = {e-mail: “<email>, pw: “<pw>”, phone: “<phone>”, sex: “<sex>”, birth: “<birth>”, name: "<name>"}  
 response = {token: “token”}  
 ********************************************************
 SignupScreen
@@ -75,7 +121,7 @@ response = {
 	name: “<id>”,   
 	email: “<email>”,  
 	pw: “<pw length>”,  
-	phone_num: “phon_num”,  
+	phone: “phon_num”,  
 	birth: “<date>”,  
 	sex: “<F/M>”,  
 }
@@ -101,15 +147,10 @@ main/video 					GET
 ********************************************************
 header = {token: “<token>”}  
 data = {  
-video_url: “<object storage get url? youtube url?>”,  
-timeline: [	// 리스트  
-	{subject: “”, time: “”},   
-	{subject: “”, time: “”},  
-	...  
-	]  
-}  
+video: "<rest-id>"
+}
 ********************************************************
-HomeMainScreen에서 imageDatas로 해당, 여기서 fetch 추가해서 쓸 예정  
+VideoScreen에서 video와 timeline에 해당.  
 ********************************************************
 
 ********************************************************
@@ -204,40 +245,6 @@ OrderScreen에서 mainArray, sideArray에 해당
 ********************************************************
 
 ********************************************************
-event/coupon/stamp						POST
-********************************************************
-header: {token: “user-token”}  
-response: {  
-	coupon_id: <coupon id>,  
-	used: <true/false>,  
-	usedDate: <date>  
-}  
-response: {  
-	coupon: {  
-		used: <true/false>,  
-		usedDate: <date>,  
-	},  
-	// success 뭐 이런 걸 추가할 거면 하기  
-}
-********************************************************
-OrderScreen에서 mainArray, sideArray에 해당
-********************************************************
-
-********************************************************
-event/stamp 						POST
-********************************************************
-header: {token: “token”}  
-data = {  
-	rest-id: <rest-id>,  
-	// rest-id랑 user-id(==token)으로 stbox-id 찾기  
-	date: <stamp-date>  
-}  
-********************************************************
-ReviewScreen에서 리뷰 제출 직후 stamp 추가.  
-StampboxScreen에서 새로 추가된 스탬프 조회 가능하도록.
-********************************************************
-
-********************************************************
 event/stamp/box 						GET
 ********************************************************
 header: { token: <token> }  
@@ -269,8 +276,8 @@ event/review 						POST
 ********************************************************
 header = {token: “token”}  
 data = [  
-	{menu_id: <menu_id>, starPoint: <int형>, saltReview: <int형>, amountReview: <int형>, otherReview: <int형>, complete: <boolean형>},  
-	{menu_id: <menu_id>, starPoint: <int형>, saltReview: <int형>, amountReview: <int형>, otherReview: <int형>, complete: <boolean형>},  
+	{menu_id: <menu_id>, starPoint: <int형>, saltReview: <int형>, amountReview: <int형>, otherReview: <int형>},  
+	{menu_id: <menu_id>, starPoint: <int형>, saltReview: <int형>, amountReview: <int형>, otherReview: <int형>},  
 …  
 ]
 ********************************************************
