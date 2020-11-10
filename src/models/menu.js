@@ -1,0 +1,21 @@
+/*
+* EXPLANATION
+* menu table 관련 query문들
+*/
+//////////////////////////////////////////////////
+// * IMPORT ZONE
+
+//////////////////////////////////////////////////
+// * MAIN SQLs
+
+let Menu = {};
+
+Menu.getMenuAll = 'sql문'
+
+Menu.getMenuIdName = 'sql문'
+
+Menu.getType = 'sql문'
+
+//////////////////////////////////////////////////
+//* EXPORT ZONE
+module.exports = Menu
