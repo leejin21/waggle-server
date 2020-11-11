@@ -13,6 +13,8 @@ var router = express.Router();
 // import service layer
 
 const {thumbnails} = require('../services/main.services');
+const {menus} = require('../services/main.services');
+const {hearts} = require('../services/main.services');
 
 //////////////////////////////////////////////////
 //* MAIN ROUTER
@@ -24,17 +26,20 @@ const {thumbnails} = require('../services/main.services');
 
 // main/menu
 router.post('/menu', function(req, res){
-    
-    res.send([
-        {id: 1, menu_id: 2, name: "비빔밥", photo: 2},
-        {id: 2, menu_id: 10, name: "로제떡볶이", photo: 10}
-    ]);
-})
+    res.send(menus(req));
+});
 
 // main/thumbnails
 router.get('/thumbnails', function(req, res){
+    console.log("router, thumbnails");
     res.send(thumbnails(req));
-})
+});
+
+// main/heartchanged
+router.post('/heartchanged', function(req, res){
+    hearts(req);
+    res.sendStatus(200);
+});
 
 //////////////////////////////////////////////////
 //* EXPORT ZONE

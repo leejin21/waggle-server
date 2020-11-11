@@ -12,25 +12,46 @@
 // * MAIN ALGORITHM
 
 const thumbnails = (req) => {
-    var response = [
+    // validate header
+    
+    // get all restaurants
+    // connection.query('SELECT * from Users', (error, rows, fields) => {
+    //     if (error) throw error;
+    //     console.log('User info is: ', rows);
+    //     });
+    //     // 터미널에서 node index를 해주면 console.log로 sql문의 결과를 출력하게 된다.
+    //     //connection.query의 콜백함수의 인자는 에러와 결과값이 들어간다. 세번째 인자는 user의info를 보여주는데 이유는 잘 모르겠다.
+    //   connection.end();
+    // get all preferred restaurants
+    console.log('thumbnails');
+    // save sorted restaurants to res
+    var res = [
+        // 이렇게 array 형태의 GET 아주 잘 받아짐.
     {
-        name: "rest-name",
+        name: "이리오너라",
         heart_filled: "true",
-        rest_id: "rest_id",
-        photo: "rest_id.jpg",
+        rest_id: "1",
+        photo: {
+            name: "1.jpg",
+            graphic: "1400"
+        },
     }, 
     {
-        name: "rest-name",
+        name: "또와또",
         heart_filled: "true",
-        rest_id: "rest_id",
-        photo: "rest_id.jpg",
+        rest_id: "4",
+        photo: {
+            name: "4.jpg",
+            graphic: "1800"
+        },
     }];
 
-    return response;
+    return res;
 }
 
 const menus = (req) => {
-    var response = [
+    // 
+    var res = [
         {
             id: "id",
             menu_id: "menu_id",
@@ -45,10 +66,13 @@ const menus = (req) => {
         },
     ];
 
-    return response;
+    return res;
 }
 
+const hearts = (req) => {
+    console.log(req.body);
+}
 
 //////////////////////////////////////////////////
 //* EXPORT ZONE
-module.exports = {thumbnails, menus}
+module.exports = {thumbnails, menus, hearts};

@@ -15,6 +15,7 @@ var router = express.Router();
 
 // user/register
 router.post('/register', function(req, res){
+    console.log(req.body)
     res.sendStatus(201);
 })
 
