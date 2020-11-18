@@ -17,12 +17,19 @@ const {menus} = require('../services/main.services');
 const {hearts} = require('../services/main.services');
 
 //////////////////////////////////////////////////
-//* MAIN ROUTER
+// * RESTAURANT DATA: TEMPORARY CODE
 
-// main/video
-// router.get('/video', function(req, res){
-//     res.send({video: "video_get_url_from_object_storage"});
-// })
+const rests = [
+    // TODO step 2 이후: photo는 rest_id.jpg로.
+    {name: "포이푸", heart_filled: true, rest_id: 1, photo: "1.png"},
+    {name: "풀사이드", heart_filled: true, rest_id: 2, photo: "2.png"},
+    {name: "버거룸", heart_filled: false, rest_id: 3, photo: "3.png"},
+    {name: "데일리오아시스", heart_filled: false, rest_id: 4, photo: "4.png"},
+];
+
+//////////////////////////////////////////////////
+
+//* MAIN ROUTER
 
 // main/menu
 router.post('/menu', function(req, res){
@@ -31,8 +38,9 @@ router.post('/menu', function(req, res){
 
 // main/thumbnails
 router.get('/thumbnails', function(req, res){
+    // TODO header authentication
     console.log("router, thumbnails");
-    res.send(thumbnails(req));
+    res.send(rests);
 });
 
 // main/heartchanged
