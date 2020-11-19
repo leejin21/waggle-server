@@ -14,27 +14,8 @@ var jwt = require('jsonwebtoken');
 
 // import my custom modules
 var authJWT = require('./auth.mid');
-//////////////////////////////////////////////////
-//* USERS DATA: TEMPORARY CODE
-const users = [
-    {
-        email: 'john',
-        pw: '0000',
-        phone_num: '010-1111-1111',
-        sex: 'F',
-        birth: new Date(1991,0,1),
-        name: '이존'
-    }, {
-        email: 'anna',
-        pw: '0000',
-        phone_num: '010-2222-2222',
-        sex: 'F',
-        birth: new Date(1992,1,2),
-        name: '이애나'
-    }
-];
 
-
+const {users} = require('../models/temp');
 //////////////////////////////////////////////////
 //* USER ROUTER
 // TODO services로 세부 로직들 옮기기
@@ -99,10 +80,10 @@ router.post('/logout', function(req, res){
 // user/settings
 router.get('/settings', authJWT.authHeader, function(req, res){
     // ! 검증 완료(STEP 1)
+    console.log('======================================');
     console.log("user/settings", " GET");
-    const user = users.find(u => {return u.email === req.useremail});
-    if (user) {
-        res.send({name: user.name, phone_num: user.phone_num});
+    if (req.user) {
+        res.send({name: req.user.name, phone_num: req.user.phone_num});
     } else {
         res.status(400).json({error: "incorrect token"});
     }  
@@ -139,3 +120,4 @@ router.put('/profile', function(req, res){
 //////////////////////////////////////////////////
 //* EXPORT ZONE
 module.exports = router;
+module.users = users;

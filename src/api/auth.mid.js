@@ -7,6 +7,7 @@
 // * IMPORT SECTION
 
 var jwt = require('jsonwebtoken');
+const {users} = require('../models/temp');
 //////////////////////////////////////////////////
 // * MAIN SECTION
 
@@ -16,12 +17,16 @@ const authHeader = (req, res, next) => {
     if (header) {
         const token = header.split(' ')[1];
 
-        jwt.verify(token, accessTokenSecret(), (err, user) => {
+        jwt.verify(token, accessTokenSecret(), (err, ui) => {
+            console.log("verify");
             if (err) {
+                console.log("++++++403 ERROR++++++");
                 return res.sendStatus(403);
             }
-            req.useremail = user.email;
-            console.log(req.useremail);
+            console.log(ui);
+            console.log(users);
+            req.user = users.find(u => {return u.email === ui.email});
+            console.log(req.user);
             next();
         });
     } else {
