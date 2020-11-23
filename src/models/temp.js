@@ -26,7 +26,12 @@ const users = [
         accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFubmEiLCJpYXQiOjE2MDU3NjA3ODF9.7I56NTS68I38agKs1YLjTBkxZh8Q6-4COkHQU0dT-xE"
     }
 ];
+//////////////////////////////////////////////////
+// * REVIEW DATA: TEMPORARY CODE
 
+const reviews = [
+
+];
 //////////////////////////////////////////////////
 // * RESTAURANT DATA: TEMPORARY CODE
 
@@ -87,6 +92,14 @@ const coupon_menus = [
     {coupon_id: 7, menu_id: 9},
     {coupon_id: 7, menu_id: 10},
 ]
+//////////////////////////////////////////////////
+// * STAMP DATA: TEMPORARY CODE
+
+const stamps = [
+    {},
+]
+
+
 
 //////////////////////////////////////////////////
 // * EXPORT SECTION
@@ -95,3 +108,4 @@ exports.rest_data = rest_data;
 exports.menu_data = menu_data;
 exports.coupons = coupons;
 exports.coupon_menus = coupon_menus;
+exports.reviews = reviews;

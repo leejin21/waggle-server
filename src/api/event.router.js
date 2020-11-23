@@ -167,7 +167,20 @@ router.put('/coupon', authHeader, function(req, res){
 
 // event/review
 router.post('/review', function(req, res){
-    // 다이어그램 참고해서 코드 짜기
+    /*
+    * JSON FORM
+        {
+            coupon_id: 1,
+            review_able: false,
+        }
+    * EXPLANATION
+        - 해당 쿠폰의 review_able을 false로,
+        - 스탬프 추가해주기
+        - 유저의 리뷰 추가해주기
+    */
+    console.log('======================================');
+    console.log('/event/review POST');
+    
     res.sendStatus(201);
 })
 

@@ -15,12 +15,13 @@ var router = express.Router();
 // stamp/box
 router.get('/box', function(req, res){
     res.send([
-        {rest_id: "rest_id", rest_name: "rest_name", stbox_id: "stbox_id", stamp_num: "stamp_num"},
-        {rest_id: "rest_id", rest_name: "rest_name", stbox_id: "stbox_id", stamp_num: "stamp_num"}
-    ])
+        { name: 'ABC레스토랑', collected: '2', all: '10'},
+        { name: '가나다레스토랑', collected: '1', all: '10'}
+    ]);
 })
 
 // stamp/detail
+// TODO STEP 2 이후
 router.get('/detail', function(req, res){
     res.send([
         {date: "stamp_date1"},
