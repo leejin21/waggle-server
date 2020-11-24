@@ -30,7 +30,7 @@ const users = [
 // * REVIEW DATA: TEMPORARY CODE
 
 const reviews = [
-
+    // rest_id, menu_id, star_review, salt_review, amount_review, other_review, post_date, user_id, review_id
 ];
 //////////////////////////////////////////////////
 // * RESTAURANT DATA: TEMPORARY CODE
@@ -96,11 +96,12 @@ const coupon_menus = [
 // * STAMP DATA: TEMPORARY CODE
 
 const stamps = [
-    {},
-]
+    // stamp_id, stamp_date, box_id
+];
 
-
-
+const stampboxes = [
+    // rest_id, user_id, isFull, fullCouponId, stampnum, stampbox_id
+];
 //////////////////////////////////////////////////
 // * EXPORT SECTION
 exports.users =  users;
@@ -109,3 +110,5 @@ exports.menu_data = menu_data;
 exports.coupons = coupons;
 exports.coupon_menus = coupon_menus;
 exports.reviews = reviews;
+exports.stamps = stamps;
+exports.stampboxes = stampboxes;

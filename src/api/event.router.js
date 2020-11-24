@@ -17,11 +17,15 @@ var {authHeader} = require('./auth.mid');
 express.urlencoded({extended: true});
 
 // import temp data
-const {coupons} = require('../models/temp');
+const {coupons, reviews} = require('../models/temp');
 const {coupon_menus} = require('../models/temp');
+
 const {rest_data} = require('../models/temp');
 const {menu_data} = require('../models/temp');
 const { menus } = require('../services/main.services');
+
+const {stamps} = require('../models/temp');
+const {stampboxes} = require('../models/temp');
 
 //////////////////////////////////////////////////
 // * DETAIL FUNCTION SECTION
@@ -155,7 +159,6 @@ router.put('/coupon', authHeader, function(req, res){
         }
         console.log("changed");
         console.log(change_coupon);
-        console.log(coupons);
         console.log("++++++++++200 SUCCESS++++++++++");
         res.sendStatus(200);
     } else {
@@ -166,22 +169,97 @@ router.put('/coupon', authHeader, function(req, res){
 
 
 // event/review
-router.post('/review', function(req, res){
+router.post('/review', authHeader, function(req, res){
     /*
     * JSON FORM
-        {
-            coupon_id: 1,
-            review_able: false,
+        data = {
+            coupon: {
+                coupon_id: 1,
+                review_able: false
+            },
+            review: [
+                {
+                    menu_id: 10,
+                    star_review: 1,
+                    salt_review: 1,
+                    amount_review: 1,
+                    other_review: 1,
+                },
         }
+        * review 속 변수들은 0부터 시작
+        * other_review의 경우 다른 리뷰와는 달리 -1이 가능.
+    
     * EXPLANATION
-        - 해당 쿠폰의 review_able을 false로,
-        - 스탬프 추가해주기
-        - 유저의 리뷰 추가해주기
+        - SECTION 1 해당 쿠폰의 review_able을 false로,
+        - SECTION 2 스탬프 추가해주기
+        - SECTION 3 유저의 리뷰 추가해주기
     */
     console.log('======================================');
     console.log('/event/review POST');
-    
-    res.sendStatus(201);
+    if (req.user) {
+        // SECTION 1
+        let change_coupon = coupons.find(c => {
+            return (c.coupon_id===req.body.coupon.coupon_id);
+        });
+        change_coupon.review_able = req.body.coupon.review_able;
+        
+        // SECTION 2
+        let box = stampboxes.find(b => {
+            return (b.user_id === req.user.user_id)&&(b.rest_id === change_coupon.rest_id);
+        });
+        if (!box) {
+            // stampbox 없으면 생성
+            console.log("box 생성");
+            let st_len = stampboxes.push({
+                rest_id: change_coupon.rest_id,
+                user_id: req.user.user_id,
+                isFull: false,
+                fullCouponId: null,
+                stampnum: 0,
+                stampbox_id: stampboxes.length+1
+            });
+            box = stampboxes[st_len-1];
+        }
+        // stamp 추가
+        const today = new Date();
+        stamps.push({
+            box_id: box.stampbox_id, 
+            stamp_id: stamps.length+1, 
+            stamp_date: today
+        })
+        // stamp 추가한 것 stampbox에 반영
+        box.stampnum = box.stampnum + 1;
+        if (box.stampnum >= 10) {
+            // isFull 설정
+            console.log("isFull 설정");
+            box.isFull = true;
+        }
+        console.log(stampboxes);
+        console.log(stamps);
+
+        // SECTION 3
+        req.body.review.forEach(r => {
+            reviews.push({
+                rest_id: change_coupon.rest_id,
+                user_id: req.user.user_id,
+                review_id: reviews.length + 1,
+                menu_id: r.menu_id,
+                post_date: today,
+                content: {
+                    star_review: r.star_review,
+                    salt_review: r.salt_review,
+                    amount_review: r.amount_review,
+                    other_review: r.other_review
+                }
+            });
+        })
+        console.log(reviews);
+        console.log("++++++++++200 SUCCESS++++++++++");
+        res.status(200).json({success: true});
+    } else {
+        console.log("++++++++++400 FAIL++++++++++");
+        res.status(400).json({error: "incorrect token"});
+    }
 })
 
 //////////////////////////////////////////////////
