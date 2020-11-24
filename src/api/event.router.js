@@ -17,15 +17,12 @@ var {authHeader} = require('./auth.mid');
 express.urlencoded({extended: true});
 
 // import temp data
-const {coupons, reviews} = require('../models/temp');
-const {coupon_menus} = require('../models/temp');
+const {coupons, reviews, coupon_menus} = require('../models/temp');
 
-const {rest_data} = require('../models/temp');
-const {menu_data} = require('../models/temp');
+const {rest_data, menu_data} = require('../models/temp');
 const { menus } = require('../services/main.services');
 
-const {stamps} = require('../models/temp');
-const {stampboxes} = require('../models/temp');
+const {stamps, stampboxes} = require('../models/temp');
 
 //////////////////////////////////////////////////
 // * DETAIL FUNCTION SECTION

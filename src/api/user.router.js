@@ -12,6 +12,9 @@ var router = express.Router();
 
 var jwt = require('jsonwebtoken');
 
+// settings
+express.urlencoded({extended: true});
+
 // import my custom modules
 var authJWT = require('./auth.mid');
 

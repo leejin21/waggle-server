@@ -30,7 +30,7 @@ app.use('/main', main_route);
 
 app.use('/event', event_route);
 
-app.use('/event', stamp_route);
+app.use('/stamp', stamp_route);
 
 //////////////////////////////////////////////////
 //* LISTENING ZONE

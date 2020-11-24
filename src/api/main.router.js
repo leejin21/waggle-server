@@ -10,11 +10,13 @@ const { response } = require('express');
 var express = require('express');
 var router = express.Router();
 
+// settings
+express.urlencoded({extended: true});
+
 // import service layer
 const {thumbnails} = require('../services/main.services');
 const {menus} = require('../services/main.services');
 const {hearts} = require('../services/main.services');
-
 
 // import temporary data
 const {rest_data, coupon_menus} = require('../models/temp');
