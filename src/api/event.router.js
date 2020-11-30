@@ -52,6 +52,12 @@ router.post('/coupon', authHeader, function(req, res){
         rest_id: 1,
         menus: [1, 3]
     }
+
+    * EXPLANATION
+    (1) type === G
+    (2) type === S
+        해당 스탬프박스의 날짜순으로 정렬한 가장 오래된 스탬프 10개 삭제
+        스탬프박스 isFull === False로 조정(10개 이하일 경우), stampnum -= 10
     */
     console.log('======================================');
     console.log('/event/coupon POST');
@@ -138,6 +144,7 @@ router.put('/coupon', authHeader, function(req, res){
             [used: true],
             [review_able: false]
         }
+
     */
     console.log('======================================');
     console.log('/event/coupon PUT');

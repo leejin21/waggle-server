@@ -94,7 +94,7 @@ router.post('/heartchanged', function(req, res){
 
 // main/heartchanged
 router.get('/heartchanged', function(req, res){
-    console.log('======================================')
+    console.log('======================================');
     console.log('/main/heartchanged GET');
     console.log(req.query.rest_id, typeof parseInt(req.query.rest_id));
     const rest = rest_data.find(v => {return v.rest_id===parseInt(req.query.rest_id)});
@@ -107,6 +107,13 @@ router.get('/heartchanged', function(req, res){
         res.sendStatus(400);
     }
     
+})
+
+// main/test
+router.get('/test', function(req, res) {
+    console.log('======================================');
+    console.log('/main/test GET');
+    res.send({test: 'test server'});
 })
 
 //////////////////////////////////////////////////
