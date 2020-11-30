@@ -26,6 +26,14 @@ const {stamps, stampboxes} = require('../models/temp');
 
 // stamp/box
 router.get('/box', authHeader, function(req, res){
+    /*
+    * JSON FORM
+    data = [
+        { name: '포이푸', collected: '13', all: '10' },
+        ...
+    ]
+    TODO 1. collected가 10을 초과할 경우 일단 그대로 초과한 수만큼 주고, 프론트에서 10만 여과해서 보내준다.
+    */
     console.log("======================================");
     console.log("stamp/box GET");
     if (req.user) {
@@ -49,13 +57,42 @@ router.get('/box', authHeader, function(req, res){
 })
 
 // stamp/detail
-// TODO STEP 2 이후
+/* 
+TODO
+date() 관련 db에 집어넣는 건
+https://stackoverflow.com/questions/5129624/convert-js-date-time-to-mysql-datetime
+참고
+db 연결하고 해야 할 듯.
+*/
+
 router.get('/detail', function(req, res){
-    // 상단의 A메뉴 대응되는 str 보내주기(Rest 테이블에서 sidemenu_id)
+    /*
+    * JSON FORM
+        data = [
+            {id: 1, date: "20.09.15"},
+            {id: 2, date: "20.09.16"},
+        ]
+        TODO 1. date순으로 정렬해서 가져오기
+        TODO 2. db 형태의 date를 20.09.15 형태의 str으로.
+    */
+    console.log("======================================");
+    console.log('stamp/detail GET');
+    date1 = new Date();
+    date2 = new Date();
+    console.log(date1, date2);
     res.send([
-        {date: "stamp_date1"},
-        {date: "stamp_date2"},
+        {id: 1, date: "20.09.15"},
+        {id: 2, date: "20.09.16"},
+        {id: 3, date: "20.09.16"},
+        {id: 4, date: "20.09.16"},
+        {id: 5, date: "20.09.16"},
+        {id: 6, date: "20.09.16"},
+        {id: 7, date: "20.09.16"},
+        {id: 8, date: "20.09.16"},
+        {id: 9, date: "20.09.16"},
+        {id: 10, date: "20.09.18"},
     ])
+    console.log("++++++++200 SUCCESS++++++++");
 })
 
 //////////////////////////////////////////////////
