@@ -14,7 +14,6 @@ const users = [
         sex: 'F',
         birth: new Date(1991,0,1),
         name: '이존',
-        accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFubmEiLCJpYXQiOjE2MDU2OTEyNTB9.pVBo1dJlGCvGsjeDlLtCBQXhyD_t6WKNsbOoGC5lcFM"
     }, {
         user_id: 2,
         email: 'anna',
@@ -23,7 +22,6 @@ const users = [
         sex: 'F',
         birth: new Date(1992,1,2),
         name: '이애나',
-        accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFubmEiLCJpYXQiOjE2MDU3NjA3ODF9.7I56NTS68I38agKs1YLjTBkxZh8Q6-4COkHQU0dT-xE"
     }
 ];
 //////////////////////////////////////////////////

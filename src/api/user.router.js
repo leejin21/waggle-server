@@ -79,6 +79,18 @@ router.post('/logout', function(req, res){
     }
 })
 
+router.get('/token', authJWT.authHeader, function(req, res) {
+    // ! Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    console.log('======================================');
+    console.log('user/token GET');
+    if (req.user) {
+        console.log("++++++++200 SUCCESS++++++++");
+        res.status(200).send({val: "success"});
+    } else {
+        console.log("++++++++400 FAIL++++++++");
+        res.status(400).send({error: "incorrect token"});
+    }
+})
 
 // user/settings
 router.get('/settings', authJWT.authHeader, function(req, res){
