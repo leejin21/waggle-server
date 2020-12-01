@@ -39,13 +39,15 @@ router.post('/register', function(req, res){
         res.sendStatus(201);
     } catch (e) {
     // 통과 못하면 res.sendStatus(400)하기
-        res.sendStatus(400);
+        res.sendStatus(400).json({error: "invalid data"});
     }
 })
 
 // user/login
 router.post('/login', function(req, res){
     // ! 검증 완료(STEP 1)
+    console.log('======================================')
+    console.log('/user/login POST');
     // Read username and password from request body
     const { email, pw } = req.body;
 
@@ -61,19 +63,20 @@ router.post('/login', function(req, res){
         res.json({
             accessToken
         });
+        console.log("++++++++200 SUCCESS++++++++");
     } else {
         res.status(400).json({error: 'email or pw incorrect'});
+        console.log("++++++++400 FAIL++++++++");
     }
 })
 
-router.post('/logout', function(req, res){
+router.post('/logout', authJWT.authHeader, function(req, res){
     const {email, pw} = req.body;
-    // TODO token validate하는 code로 변경
-    const user = users.find(u => {return u.email === email && u.pw === pw});
-
-    if (user) {
+    
+    if (req.user) {
         // delete token from db
-        res.sendStatus(201);
+        req.user.accessToken = null;
+        res.status(201).json({status: "success"});
     } else {
         res.status(400).json({error: 'incorrect token or email'})
     }
@@ -85,10 +88,10 @@ router.get('/token', authJWT.authHeader, function(req, res) {
     console.log('user/token GET');
     if (req.user) {
         console.log("++++++++200 SUCCESS++++++++");
-        res.status(200).send({val: "success"});
+        res.status(200).json({val: "success"});
     } else {
         console.log("++++++++400 FAIL++++++++");
-        res.status(400).send({error: "incorrect token"});
+        res.status(400).json({error: "incorrect token"});
     }
 })
 

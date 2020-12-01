@@ -83,12 +83,11 @@ router.post('/heartchanged', function(req, res){
     const rest = rest_data.find(v => {return v.rest_id === req.body.rest_id});
     if (rest) {
         rest.heart_filled = req.body.heart_filled;
-        console.log(rest_data);
         console.log("++++++++200 SUCCESS++++++++");
-        res.sendStatus(200);
+        res.send({heart_filled: rest.heart_filled});
     } else {
         console.log("++++++++400 FAIL++++++++");
-        res.sendStatus(400);
+        res.sendStatus(400).json({error: "restaurant not exist"});
     }
 });
 
@@ -96,17 +95,16 @@ router.post('/heartchanged', function(req, res){
 router.get('/heartchanged', function(req, res){
     console.log('======================================');
     console.log('/main/heartchanged GET');
-    console.log(req.query.rest_id, typeof parseInt(req.query.rest_id));
+    // console.log(req.query.rest_id, typeof parseInt(req.query.rest_id));
     const rest = rest_data.find(v => {return v.rest_id===parseInt(req.query.rest_id)});
-    console.log(rest);
+    // console.log(rest);
     if (rest){
         res.send({rest_id: rest.rest_id, heart_filled: rest.heart_filled});
         console.log("++++++++200 SUCCESS++++++++");
     } else {
         console.log("++++++++400 FAIL++++++++");
-        res.sendStatus(400);
+        res.status(400).json({error: "restaurant not exist"});
     }
-    
 })
 
 // main/test

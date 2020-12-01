@@ -62,7 +62,7 @@ router.post('/coupon', authHeader, function(req, res){
     console.log('======================================');
     console.log('/event/coupon POST');
     if (req.user) {
-        console.log(req.body);
+        
         const coupon_id = coupons.length+1;
         coupons.push({
             // TODO STEP 2 이후: 날짜 및 시간은 date()로
@@ -80,7 +80,7 @@ router.post('/coupon', authHeader, function(req, res){
         req.body.menus.map(m => {
              coupon_menus.push({coupon_id: coupon_id, menu_id: m});
         });
-        res.sendStatus(200);
+        res.status(200).json({coupon: "posted"});
     } else {
         res.status(400).json({error: "incorrect token"});
     }

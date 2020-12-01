@@ -23,14 +23,14 @@ const authHeader = (req, res, next) => {
                 console.log("++++++403 ERROR++++++");
                 return res.sendStatus(403);
             }
-            console.log(ui);
-            console.log(users);
+            // console.log(ui);
+            // console.log(users);
             req.user = users.find(u => {return u.email === ui.email});
-            console.log(req.user);
+            // console.log(req.user);
             next();
         });
     } else {
-        res.sendStatus(401).send({error: "invalid token"});
+        res.status(401).json({error: "invalid token"});
     }
 };
 
