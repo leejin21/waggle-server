@@ -56,13 +56,16 @@ router.post('/coupon', authHeader, function(req, res){
     * EXPLANATION
     (1) type === G
     (2) type === S
+        rest_id로 스탬프 박스 찾고
         해당 스탬프박스의 날짜순으로 정렬한 가장 오래된 스탬프 10개 삭제
         스탬프박스 isFull === False로 조정(10개 이하일 경우), stampnum -= 10
+        rest_id와 묶여 있는 스탬프 사이드로 coupons와 coupon_menus에 push
+        
     */
     console.log('======================================');
     console.log('/event/coupon POST');
     if (req.user) {
-        if (req.query.type === "G") {
+        if (req.body.type === "G") {
             const coupon_id = coupons.length+1;
             coupons.push({
                 // TODO STEP 2 이후: 날짜 및 시간은 date()로
@@ -83,6 +86,22 @@ router.post('/coupon', authHeader, function(req, res){
         } else {
             // 해당 스탬프 박스의 날짜순으로 정렬한 가장 오래된 스탬프 10개 삭제
             // 스탬프박스 isFull === False로 조정(10개 이하일 경우), stampnum -= 10
+            console.log('S');
+            console.log(req.body);
+            const coupon_id = coupons.length+1;
+            coupons.push({
+                coupon_id: coupon_id,
+                user_id: req.user.user_id,
+                rest_id: req.body.rest_id,
+                due: "2020.12.04 15:30 PM",
+                used: false,
+                issuedDate: "2020.11.19 15:30 PM",
+                usedDate: null,
+                type: req.body.type,
+                review_able: true,
+                view_remove: false,
+            })
+            console.log(coupons);
         }
         res.status(200).json({coupon: "posted"});
     } else {

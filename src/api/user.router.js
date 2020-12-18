@@ -19,27 +19,18 @@ express.urlencoded({extended: true});
 var authJWT = require('./auth.mid');
 
 const {users} = require('../models/temp');
+const { insertUser } = require('../models/user');
 //////////////////////////////////////////////////
 //* USER ROUTER
 // TODO services로 세부 로직들 옮기기
 
 // user/register
 router.post('/register', function(req, res){
-
-    const {email, pw, phone, sex, birth, name} = req.body;
-    
-    // TODO email 중복 확인(실존 이메일인 지는 문의사항 관련해서 alert 주기로 하기)
-    // TODO 나머지 데이터 validate 확인하기
-    
-    try {
-        // validate 통과하면 users에 insert data 하기
-        users.concat({email, pw, phone, sex, birth, name});
-        // users 통과하면 200 전달
-        console.log(users);
-        res.sendStatus(201);
-    } catch (e) {
-    // 통과 못하면 res.sendStatus(400)하기
-        res.sendStatus(400).json({error: "invalid data"});
+    const {status, error} = insertUser(req);
+    if (error) {
+        res.sendStatus(status).json({error});
+    } else {
+        res.sendStatus(status);
     }
 })
 
@@ -53,6 +44,7 @@ router.post('/login', function(req, res){
 
     // Filter user from the users array by username and password
     const user = users.find(u => { return u.email === email && u.pw === pw });
+
 
     if (user) {
         // Generate an access token

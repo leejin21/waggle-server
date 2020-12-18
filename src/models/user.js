@@ -21,13 +21,18 @@
 
 let User = {};
 
+// for debug
+User.getAllUser = 'SELECT * FROM User';
+
 User.insertUser = 'sql문';
 
 User.getEmailPw = 'sql문';
 
-User.updateToken = 'sql문';
+User.updateToken = 'UPDATE User SET token=?  WHERE id=?';
 
-User.getUser = 'sql문';
+User.getUserwEmail = "SELECT * FROM User WHERE email=?";
+
+User.getUserwEmailPw = "SELECT * FROM User WHERE email=? AND pw=?"
 
 User.getNamePhone = 'sql문';
 

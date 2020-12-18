@@ -41,11 +41,12 @@ router.get('/box', authHeader, function(req, res){
         let boxs = stampboxes.filter(b => b.user_id===req.user.user_id);
         console.log(boxs);
         boxs = boxs.map(b => {
-            const rest_name = rest_data.find(r => r.rest_id===b.rest_id).name;
+            const rest = rest_data.find(r => r.rest_id===b.rest_id);
             return {
-                name: rest_name,
+                name: rest.name,
                 collected: b.stampnum.toString(),
                 all: '10',
+                rest_id: rest.rest_id,
             };
         });
         console.log(boxs);
