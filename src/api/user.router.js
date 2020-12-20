@@ -15,9 +15,11 @@ var jwt = require('jsonwebtoken');
 // settings
 express.urlencoded({extended: true});
 
+// import db connection
+const connection = require('./config/connections.js');
+
 // import my custom modules
 var authJWT = require('./auth.mid');
-
 const {users} = require('../models/temp');
 const { insertUser } = require('../models/user');
 //////////////////////////////////////////////////
