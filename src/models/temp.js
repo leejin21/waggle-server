@@ -8,9 +8,9 @@ db 구축 전, temporary data를 모아둔 js 파일입니다.
 const users = [
     /*
     ! token null로 비뀌면 token 부분 없애기
-    INSERT INTO User(email, pw, phone, sex, birth_date, name, token)
-    VALUES  ('john', '0000', '010-1111-1111', 'male', '1991-01-01', '이준', ''),
-            ('anna', '0000', '010-2222-2222', 'female', '1992-02-02', '이애나', '');
+    INSERT INTO User(email, pw, phone, sex, birth_date, name)
+    VALUES  ('john', '0000', '010-1111-1111', 'male', '1991-01-01', '이준'),
+            ('anna', '0000', '010-2222-2222', 'female', '1992-02-02', '이애나');
     */
     {
         user_id: 1,
@@ -65,20 +65,16 @@ const reviews = [
 
 const rest_data = [
     /*
-    TODO seller_id, seller_email, video_url 없애기
-    seller_id int,
     rest_id int auto_increment,
-    seller_email varchar(64),
     hits int,
-    video_url varchar(255),
     sidemenu_id int,
     rest_name varchar(64),
 
-    INSERT INTO Restaurant(seller_id, seller_email, video_url, hits, sidemenu_id, rest_name)
-    VALUES (1, "seller1", "url", 0, 30, "포이푸"),
-            (1, "seller1", "url", 0, 31, "풀사이드"),
-            (1, "seller1", "url", 0, 32, "버거룸"),
-            (1, "seller1", "url", 0, 33, "데일리오아시스");
+    INSERT INTO Restaurant(hits, sidemenu_id, rest_name)
+    VALUES (0, 30, "포이푸"),
+            (0, 31, "풀사이드"),
+            (0, 32, "버거룸"),
+            (0, 33, "데일리오아시스");
     */
     // TODO step 2 이후: photo는 rest_id.jpg로.
     {name: "포이푸", heart_filled: true, rest_id: 1, photo: "1.png"},
@@ -97,6 +93,7 @@ const prefer_video_data = [
     references User(id),
     foreign key (rest_id)
     references Restaurant(rest_id)
+    primary key (rest_id, user_id),
 
     INSERT INTO PreferVideo(user_id, isHearted, rest_id)
     VALUES  (2, FALSE, 1),
@@ -147,16 +144,6 @@ const menu_data = [
 
 const coupons = [
     /*
-    ! type이 main이랑 side로 나뉠 때
-    INSERT INTO Coupon(coupon_id, user_id, rest_id, due, isUsed, issued_date, type, isReviewable, isRemoved)
-    VALUES (1, 1, 1, "2020-11-27 22:01:01", FALSE, "2020-11-13 22:01:01", 'main', TRUE, FALSE),
-     (2, 1, 2, "2020-11-20 18:10:03", TRUE, "2020-11-06 18:10:03", 'main', TRUE, FALSE),
-     (3, 1, 3, "2020-11-10 12:53:01", TRUE, "2020-10-27 12:53:01", 'main', FALSE, FALSE),
-     (4, 2, 1, "2020-11-27 22:01:01", FALSE, "2020-11-13 22:01:01", 'main', TRUE, FALSE),
-     (5, 2, 4, "2020-11-25 11:48:05", FALSE, "2020-11-11 11:48:08", 'side', TRUE, FALSE),
-     (6, 2, 2, "2020-11-20 18:10:10", TRUE, "2020-11-06 18:10:10", 'main', TRUE, FALSE),
-     (7, 2, 3, "2020-11-10 12:52:01", TRUE, "2020-10-27 12:52:01", 'main', FALSE, FALSE);
-
     ! type이 general이랑 stamp로 나뉠 때
     INSERT INTO Coupon(coupon_id, user_id, rest_id, due, isUsed, issued_date, type, isReviewable, isRemoved)
     VALUES (1, 1, 1, "2020-11-27 22:01:01", FALSE, "2020-11-13 22:01:01", 'general', TRUE, FALSE),
@@ -186,22 +173,22 @@ const coupon_menus = [
     menu_id int,
     type enum('side', 'main'),
 
-    INSERT INTO CouponMenu(coupon_id, menu_id, type)
-    VALUES  (1, 1, 'main'),
-            (1, 3, 'main'),
-            (2, 5, 'main'),
-            (2, 7, 'main'),
-            (3, 8, 'main'),
-            (3, 9, 'main'),
-            (3, 10, 'main'),
-            (4, 1, 'main'),
-            (4, 3, 'main'),
-            (5, 13, 'main'),
-            (6, 5, 'main'),
-            (6, 7, 'main'),
-            (7, 8, 'main'),
-            (7, 9, 'main'),
-            (7, 10, 'main');
+    INSERT INTO CouponMenu(coupon_id, menu_id)
+    VALUES  (1, 1),
+            (1, 3),
+            (2, 5),
+            (2, 7),
+            (3, 8),
+            (3, 9),
+            (3, 10),
+            (4, 1),
+            (4, 3),
+            (5, 13),
+            (6, 5),
+            (6, 7),
+            (7, 8),
+            (7, 9),
+            (7, 10);
     */
     {coupon_id: 1, menu_id: 1},
     {coupon_id: 1, menu_id: 3},
